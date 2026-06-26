@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Environnements
+.venv/
+venv/
+env/
+
+# Modèles / checkpoints lourds (versionner via HuggingFace + lien, pas dans git)
+*.pt
+*.bin
+*.safetensors
+ckpts/
+ckpts_r32/
+trocr-fr-lora*/
+runs/
+
+# Données volumineuses / caches
+.cache/
+data_cache/
+*.parquet
+
+# Sorties générées localement (gardées hors git sauf échantillons livrables)
+segmentations/*.jpg
+segmentations/*.png
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+.vscode/
