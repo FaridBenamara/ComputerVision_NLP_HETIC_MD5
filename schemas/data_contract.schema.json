@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/FaridBenamara/ComputerVision_NLP_HETIC_MD5/schemas/data_contract.schema.json",
+  "title": "Data contract HTR -> NLP (projet MD5)",
+  "description": "JSON produit par le pipeline HTR (Volet 1) et consommé par le NLP (Volet 2).",
+  "type": "object",
+  "required": ["metadata", "lignes"],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["corpus", "langue", "modele", "systeme_coordonnees", "train_sha256"],
+      "additionalProperties": true,
+      "properties": {
+        "corpus": { "type": "string" },
+        "langue": { "type": "string" },
+        "modele": { "type": "string" },
+        "seuil_needs_review": { "type": "number", "minimum": 0, "maximum": 1 },
+        "train_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "systeme_coordonnees": {
+          "type": "object",
+          "required": ["origine", "unite"],
+          "properties": {
+            "origine": { "type": "string" },
+            "unite": { "type": "string" }
+          }
+        }
+      }
+    },
+    "lignes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "texte", "polygone", "confiance",
+          "confiance_char", "candidats_char", "needs_review"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "id": { "type": "string", "pattern": "^line_[0-9]+$" },
+          "image_source": { "type": "string" },
+          "texte": { "type": "string" },
+          "polygone": {
+            "type": "array",
+            "minItems": 3,
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": { "type": "number" }
+            }
+          },
+          "baseline": {
+            "type": ["array", "null"],
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": { "type": "number" }
+            }
+          },
+          "confiance": { "type": "number", "minimum": 0, "maximum": 1 },
+          "confiance_char": {
+            "type": "array",
+            "items": { "type": "number", "minimum": 0, "maximum": 1 }
+          },
+          "candidats_char": {
+            "type": "array",
+            "items": { "type": "array", "items": { "type": "string" } }
+          },
+          "needs_review": { "type": "boolean" },
+          "metadonnees": { "type": "object" }
+        }
+      }
+    }
+  }
+}
